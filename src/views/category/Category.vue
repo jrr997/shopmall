@@ -1,5 +1,6 @@
 <template>
-  <div class="wrapper">
+  <div id="category">
+  <scroll class="wrapper" ref="wrapper">
     <ul>
       <li>物品1</li>
       <li>物品2</li>
@@ -51,80 +52,74 @@
       <li>物品48</li>
       <li>物品49</li>
       <li>物品50</li>
-      <li>物品51</li>
-      <li>物品52</li>
-      <li>物品53</li>
-      <li>物品54</li>
-      <li>物品55</li>
-      <li>物品56</li>
-      <li>物品57</li>
-      <li>物品58</li>
-      <li>物品59</li>
-      <li>物品60</li>
-      <li>物品61</li>
-      <li>物品62</li>
-      <li>物品63</li>
-      <li>物品64</li>
-      <li>物品65</li>
-      <li>物品66</li>
-      <li>物品67</li>
-      <li>物品68</li>
-      <li>物品69</li>
-      <li>物品70</li>
-      <li>物品71</li>
-      <li>物品72</li>
-      <li>物品73</li>
-      <li>物品74</li>
-      <li>物品75</li>
-      <li>物品76</li>
-      <li>物品77</li>
-      <li>物品78</li>
-      <li>物品79</li>
-      <li>物品80</li>
-      <li>物品81</li>
-      <li>物品82</li>
-      <li>物品83</li>
-      <li>物品84</li>
-      <li>物品85</li>
-      <li>物品86</li>
-      <li>物品87</li>
-      <li>物品88</li>
-      <li>物品89</li>
-      <li>物品90</li>
-      <li>物品91</li>
-      <li>物品92</li>
-      <li>物品93</li>
-      <li>物品94</li>
-      <li>物品95</li>
-      <li>物品96</li>
-      <li>物品97</li>
-      <li>物品98</li>
-      <li>物品99</li>
-      <li>物品100</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
+      <li>hh</li>
     </ul>
+  </scroll>
   </div>
 </template>
 
 <script>
-import BScroll from 'better-scroll'
+import Scroll from 'components/common/scroll/Scroll'
 export default {
   name:'Category',
+  components:{Scroll},
   mounted:function() {
-    let bs = new BScroll('.wrapper', {
-  // 配置
-  probeType:2
-  })
-  bs.on('scroll',position => {
-    console.log(position);
-  })
-
   }
 }
 </script>
 
-<style>
+<style scoped>
 .wrapper {
-  height: 150px;
+  height: 600px;
   background-color: pink;
   overflow: hidden;
 }

@@ -21,6 +21,9 @@ export default {
      }
    }
  },
+ methods:{
+  },
+
  components:{
    Swiper, SwiperItem
  }
