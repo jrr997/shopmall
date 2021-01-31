@@ -1,6 +1,6 @@
 <template>
 <div class="goods-item">
-  <img :src="goodsItem.show.img" alt="">
+  <img :src="showImg" alt="" @click="itemClick">
   <div class="goods-info">
     <p>{{goodsItem.title}}</p>
     <span class="price">{{goodsItem.price}}</span>
@@ -15,7 +15,30 @@ export default {
   props:{
     goodsItem:{
       type:Object,
-      default:{}
+      default() {
+        return {}
+      }
+    }
+  },
+  methods:{
+    itemClick() {
+      // 通过动态路由方式传递参数
+      // this.$router.push('/detail/' + this.goodsItem.iid)
+
+      // 通过query方式传递参数
+      let iid = this.goodsItem.iid
+      this.$router.push({
+        path:'/detail',
+        query:{
+          iid
+        }
+      })
+
+    }
+  },
+  computed:{
+    showImg() {
+      return this.goodsItem.image || this.goodsItem.show.img
     }
   }
 }

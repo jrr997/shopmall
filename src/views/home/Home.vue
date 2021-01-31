@@ -1,21 +1,25 @@
 <template>
 <div id="home">
 <nav-bar class="home-nav"><template #center>购物街</template></nav-bar>
-
+<tab-control class="tab-control" :title="['流行', '新款', '精选']"  v-show="isTabFixed"
+                ref="tabControl1"
+                @tabClick="tabClick" />
 <scroll class="wrapper"
         ref="wrapper"
         :probeType="3"
         :listenScroll="true"
+        :useTransition="false"
         :pullup="true"
         :data="scrollData"
         :pulldown="pulldown"
         @scroll="scrollPos"
         @scrollToEnd ="scrollToEnd" >
-    <home-swiper :banners="banners" />
+    <home-swiper :banners="banners" @swiperImgLoad="swiperImgLoad" />
     <recommend-view :recommend="recommend" />
     <feature-view />
-    <tab-control class="tab-control" :title="['流行', '新款', '精选']"
-    @tabClick="tabClick" />
+    <tab-control :title="['流行', '新款', '精选']"
+                 ref="tabControl"
+                 @tabClick="tabClick" />
     <goods-list :goodsList="showGoods" />
 </scroll>
 <back-top @click.native="backTopClick" v-show="isBackTopShow" />
@@ -52,7 +56,10 @@ export default {
      currentType:'pop',
      scroll:null,
      pulldown:true,
-     isBackTopShow:false
+     isBackTopShow:false,
+     tabOffsetTop:0,
+     isTabFixed:false,
+     saveY:0
    }
  },
  methods:{
@@ -73,20 +80,33 @@ export default {
         this.currentType = 'sell'
         break
     }
+    this.$refs.tabControl.currentIndex = index;
+    this.$refs.tabControl1.currentIndex = index;
 
   },
   // BackTop组件的点击事件，返回顶部
   backTopClick() {
     this.$refs.wrapper.scrollTo(0,0,500)
   },
-  // 获取滚动position并判断是否显示子组件BackTop
+  // 滚动位置监听，获取滚动position
   scrollPos(pos) {
+    // 判断是否显示子组件BackTop
     this.isBackTopShow = - pos.y > 1000
+  // console.log(pos.y);
+    // TabControl的吸顶效果
+    this.isTabFixed = (- pos.y) > this.offsetTop
+
   },
   // 上拉加载更多
   scrollToEnd() {
-    console.log('已经到底部');
+    // console.log('已经到底部');
     this.getHomeGoods(this.currentType);
+  },
+  // 监听轮播图图片是否加载完成
+  swiperImgLoad() {
+      //  获取tab-control的offsetTop
+    this.offsetTop = this.$refs.tabControl.$el.offsetTop
+    console.log(this.$refs.tabControl.$el.offsetTop);
   },
 
 
@@ -107,6 +127,7 @@ export default {
      getHomeGoods(type,page).then(res => {
        this.goods[type].list.push(...res.data.data.list)
        this.goods[type].page += 1
+       this.$refs.wrapper.refresh()
 
      })
    }
@@ -131,32 +152,42 @@ export default {
    this.getHomeGoods('sell')
  },
  mounted() {
+ },
+ destroyed(){
+ },
+ activated() {
+   this.$refs.wrapper.scrollTo(0,this.saveY,0)
+   this.$refs.wrapper.refresh()
+ },
+ deactivated() {
+   this.saveY = this.$refs.wrapper.scroll.y
  }
 }
 </script>
 
 <style scoped>
   #home {
-    padding-top:44px;
+    /* padding-top:44px; */
     height: 100vh;
     position:relative;
   }
   .home-nav {
     background-color: var(--color-tint);
     color:#fff;
-    position:fixed;
-    z-index:999;
+    /* position:fixed; */
+    /* z-index:999;
     left:0;
     right:0;
-    top:0;
+    top:0; */
   }
   .tab-control {
-    position:sticky;
-    top:44px;
+    position:relative;
+    z-index:999;
+    top:-2px;
     background-color: #fff;
+    /* margin:-2px; */
   }
   .wrapper {
-    /* -webkit--transform:translate3d(0,0,0); */
     position:absolute;
     top:44px;
     bottom:49px;
@@ -164,4 +195,11 @@ export default {
     right:0;
     overflow: hidden;
   }
+  /* .fixed {
+    position:fixed;
+    left:0;
+    right:0;
+    top:44px;
+    background-color: #fff;
+  } */
 </style>

@@ -12,6 +12,10 @@ import BScroll from 'better-scroll'
 export default {
     name:'Scroll',
     props: {
+      useTransition: {
+        type:Boolean,
+        default:true
+      },
       /**
        * 1 滚动的时候会派发scroll事件，会截流。
        * 2 滚动的时候实时派发scroll事件，不会截流。
@@ -93,7 +97,8 @@ export default {
         this.scroll = new BScroll(this.$refs.wrapper, {
           probeType: this.probeType,
           click: this.click,
-          scrollX: this.scrollX
+          scrollX: this.scrollX,
+          useTransition: this.useTransition
         })
 
         // 是否派发滚动事件
@@ -140,6 +145,7 @@ export default {
       },
       refresh() {
         // 代理better-scroll的refresh方法
+        // console.log('bscroll已刷新');
         this.scroll && this.scroll.refresh()
       },
       scrollTo() {

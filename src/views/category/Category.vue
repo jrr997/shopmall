@@ -103,15 +103,18 @@
       <li>hh</li>
       <li>hh</li>
     </ul>
+    <goods-list />
   </scroll>
   </div>
 </template>
 
 <script>
 import Scroll from 'components/common/scroll/Scroll'
+// 测试bScroll中有图片时是否会卡顿
+import GoodsList from 'components/content/goods/GoodsList'
 export default {
   name:'Category',
-  components:{Scroll},
+  components:{Scroll, GoodsList},
   mounted:function() {
   }
 }
