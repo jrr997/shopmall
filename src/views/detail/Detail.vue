@@ -2,8 +2,8 @@
   <div class="" id="detail">
     <detail-nav-bar class="detail-nav" @titleClick="titleClick" ref="nav" >
     </detail-nav-bar>
-    <scroll ref="dscroll"
-            class="dscroll"
+    <scroll ref="wrapper"
+            class="wrapper"
             :useTransition="false"
             :probeType="3"
             :listenScroll="true"
@@ -17,6 +17,8 @@
       <goods-list :goodsList='recommends' ref="recommends" />
       <!-- <detail-recommend-info /> -->
     </scroll>
+    <back-top @click.native="backTopClick" v-show="isBackTopShow" />
+    <detail-bottom-bar @addToCart="addToCart" />
   </div>
 </template>
 
@@ -28,11 +30,16 @@ import DetailShopInfo from './childComponents/DetailShopInfo'
 import DetailGoodsInfo from './childComponents/DetailGoodsInfo'
 import DetailParamInfo from './childComponents/DetailParamInfo'
 import DetailCommentInfo from './childComponents/DetailCommentInfo'
+import DetailBottomBar from './childComponents/DetailBottomBar.vue'
+
+import { mapActions } from 'vuex'
 import {getDetail, GoodDetail, Shop, GoodsParam, getRecommend} from 'network/detail'
+import {backTopMixin} from 'common/mixin'
 import GoodsList from 'components/content/goods/GoodsList'
 // import DetailRecommendInfo from './childComponents/DetailRecommendInfo.vue'
 
 import Scroll from 'components/common/scroll/Scroll'
+
 
 
 
@@ -48,9 +55,11 @@ export default {
     DetailGoodsInfo,
     DetailParamInfo,
     DetailCommentInfo,
-    GoodsList
+    GoodsList,
+    DetailBottomBar
     // DetailRecommendInfo
   },
+  mixins:[backTopMixin],
   data() {
     return {
       iid: null,
@@ -66,21 +75,24 @@ export default {
     }
   },
   methods:{
+    ...mapActions(['addCart']),
     imageLoaded() {
-      this.$refs.dscroll.refresh()
-      this.jumpY.push(this.$refs.params.$el.offsetTop - 100)
-      this.jumpY.push(this.$refs.comments.$el.offsetTop - 100)
-      this.jumpY.push(this.$refs.recommends.$el.offsetTop - 100)
+      this.$refs.wrapper.refresh()
+      this.jumpY.push(this.$refs.params.$el.offsetTop - 60)
+      this.jumpY.push(this.$refs.comments.$el.offsetTop - 60)
+      this.jumpY.push(this.$refs.recommends.$el.offsetTop - 60)
       this.jumpY.push(Number.MAX_VALUE)
       console.log(this.jumpY)
     },
     titleClick(index) {
       console.log(index);
-      this.$refs.dscroll.scrollTo(0,-this.jumpY[index],250)
+      this.$refs.wrapper.scrollTo(0,-this.jumpY[index],250)
 
     },
     contentScroll(pos) {
-      // console.log(123);
+      // backTop
+      this.backTopShow(pos)
+
       let y = - pos.y
       // 发生滚动时，监听pos变化，如果在某个区间0-1、1-2、2-3、3-4，则跳转到
       for(let i = 0; i < this.jumpY.length - 1; i++) {
@@ -91,6 +103,27 @@ export default {
           console.log(i);
         }
       }
+    },
+    addToCart() {
+      console.log('购物车');
+      // 获取需要在购物车展示的信息
+      const product = {}
+      product.iid = this.iid
+      product.title = this.goods.title
+      product.desc = this.goods.desc
+      product.image = this.topImages[0]
+      product.price = this.goods.realPrice
+
+      // 把信息传入state中
+      // this.$store.commit('addCart',product)
+      // 把信息传入action中，对数据进行处理
+      this.addCart(product).then(res => {
+        console.log(res);
+      })
+
+      // this.$store.dispatch('addCart',product).then(res => {
+      //   console.log(res);
+      // })
     }
   },
   created() {
@@ -100,11 +133,12 @@ export default {
     // 2.根据iid请求详细数据
     getDetail(this.iid).then(res => {
       const data = res.data.result
-      console.log(data);
+      // console.log(data);
       this.topImages = data.itemInfo.topImages;
 
       // 3.保存DetailBaseInfo组件的信息
       this.goods = new GoodDetail(data.itemInfo, data.columns, data.shopInfo)
+      // console.log(this.goods);
 
       // 4.保存DetailShopInfo组件的信息
       this.shop = new Shop(data.shopInfo)
@@ -140,8 +174,8 @@ export default {
     background-color: #fff;
     height: 100vh;
   }
-  .dscroll {
-    height: calc(100% - 44px)
+  .wrapper {
+    height: calc(100% - 102px)
   }
   .detail-nav {
     position:relative;

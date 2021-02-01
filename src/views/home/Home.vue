@@ -31,17 +31,21 @@ import NavBar from 'components/common/navbar/NavBar'
 import Scroll from 'components/common/scroll/Scroll'
 import TabControl from 'components/content/tabControl/TabControl'
 import GoodsList from 'components/content/goods/GoodsList'
-import BackTop from 'components/content/backTop/BackTop'
 
 import HomeSwiper from './childComponents/HomeSwiper'
 import RecommendView from './childComponents/RecommendView'
 import FeatureView from './childComponents/FeatureView'
 
 import {getHomeMultidata, getHomeGoods} from 'network/home'
+import {backTopMixin} from 'common/mixin'
 
 
 export default {
  name:'Home',
+ components:{
+   NavBar, Scroll, TabControl, GoodsList, HomeSwiper, RecommendView, FeatureView
+ },
+ mixins:[backTopMixin],
  data() {
    return {
      banners:[],
@@ -56,7 +60,6 @@ export default {
      currentType:'pop',
      scroll:null,
      pulldown:true,
-     isBackTopShow:false,
      tabOffsetTop:0,
      isTabFixed:false,
      saveY:0
@@ -91,7 +94,7 @@ export default {
   // 滚动位置监听，获取滚动position
   scrollPos(pos) {
     // 判断是否显示子组件BackTop
-    this.isBackTopShow = - pos.y > 1000
+  this.backTopShow(pos)
   // console.log(pos.y);
     // TabControl的吸顶效果
     this.isTabFixed = (- pos.y) > this.offsetTop
@@ -139,9 +142,6 @@ export default {
    scrollData() {
      return this.goods[this.currentType].list
    }
- },
- components:{
-   NavBar, Scroll, TabControl, GoodsList, BackTop, HomeSwiper, RecommendView, FeatureView
  },
  created() {
   //  1.请求Home页面的多个数据
@@ -195,11 +195,4 @@ export default {
     right:0;
     overflow: hidden;
   }
-  /* .fixed {
-    position:fixed;
-    left:0;
-    right:0;
-    top:44px;
-    background-color: #fff;
-  } */
 </style>
