@@ -3,7 +3,7 @@
     <nav-bar class="cart-nav">
       <template #center >购物车({{cartLength}})</template>
     </nav-bar>
-
+    <toast />
     <scroll class="wrapper" ref="wrapper">
     <cart-list />
     </scroll>
@@ -17,6 +17,7 @@ import Scroll from 'components/common/scroll/Scroll'
 import {mapGetters} from 'vuex'
 import CartList from './childComponents/CartList.vue'
 import CartBottonBar from './childComponents/CartBottonBar.vue'
+import Toast from '../../components/common/toast/Toast.vue'
 
 
 export default {
@@ -25,7 +26,8 @@ export default {
     NavBar,
     CartList,
     Scroll,
-    CartBottonBar
+    CartBottonBar,
+    Toast
   },
   computed:{
     ...mapGetters(['cartLength','cartList'])

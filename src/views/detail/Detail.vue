@@ -119,11 +119,14 @@ export default {
       // 把信息传入action中，对数据进行处理
       this.addCart(product).then(res => {
         console.log(res);
+        // 弹出Toast
+        this.$toast.show(res,2000)
       })
 
       // this.$store.dispatch('addCart',product).then(res => {
       //   console.log(res);
       // })
+
     }
   },
   created() {
