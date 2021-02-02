@@ -1,5 +1,5 @@
 <template>
-  <div class="" id="detail">
+  <div class="" id="detail" ref="detail" :style="{height:detailHeight}">
     <detail-nav-bar class="detail-nav" @titleClick="titleClick" ref="nav" >
     </detail-nav-bar>
     <scroll ref="wrapper"
@@ -15,7 +15,6 @@
       <detail-param-info :paramInfo="paramInfo" ref="params" />
       <detail-comment-info :commentInfo="commentInfo" ref="comments" />
       <goods-list :goodsList='recommends' ref="recommends" />
-      <!-- <detail-recommend-info /> -->
     </scroll>
     <back-top @click.native="backTopClick" v-show="isBackTopShow" />
     <detail-bottom-bar @addToCart="addToCart" />
@@ -71,7 +70,8 @@ export default {
       commentInfo:{},
       recommends:[],
       jumpY:[0],
-      currentIndex:0
+      currentIndex:0,
+      detailHeight: '0px'
     }
   },
   methods:{
@@ -127,6 +127,10 @@ export default {
       //   console.log(res);
       // })
 
+    },
+    getViewHeight() {
+      this.detailHeight = window.innerHeight + 'px'
+      console.log('detailHeight: ' + this.viewHeight);
     }
   },
   created() {
@@ -160,9 +164,12 @@ export default {
       // 8.获取推荐信息
       getRecommend().then(res => {
         this.recommends = res.data.data.list
-        console.log(res.data.data.list);
       })
     })
+
+    this.$nextTick(() => {
+      this.getViewHeight()
+    });
 
   },
   mounted() {
@@ -175,7 +182,7 @@ export default {
     position:relative;
     z-index:999;
     background-color: #fff;
-    height: 100vh;
+    /* height: 100vh; */
   }
   .wrapper {
     height: calc(100% - 102px)

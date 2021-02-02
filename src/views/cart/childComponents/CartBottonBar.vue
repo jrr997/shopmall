@@ -53,7 +53,7 @@ export default {
 .cart-buttom-bar {
   display: flex;
   position:fixed;
-  bottom:49px;
+  bottom:49PX; /* px-to-viewport-ignore */
   left:0;
   right:0;
   line-height: 40px;
@@ -66,6 +66,7 @@ export default {
   height: 100%;
   padding-left:10px;
   margin-right:20px;
+  text-align:center;
 }
 .check-button {
   width: 20px;
