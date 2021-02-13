@@ -5,7 +5,7 @@
     <span>全选</span>
     </div>
     <div class="total">合计{{total}}</div>
-    <div class="pay">去结算({{cartLength}})</div>
+    <div class="pay" @click="pay" >去结算({{cartLength}})</div>
   </div>
 </template>
 
@@ -43,6 +43,13 @@ export default {
          this.cartList.forEach(item => {
           item.isChecked = true
         })
+      }
+    },
+    pay() {
+      if(this.cartLength == 0) {
+        this.$toast.show('购物车没有商品！',1000);
+      }else {
+      this.$toast.show('别买，省点钱！',2000);
       }
     }
   }

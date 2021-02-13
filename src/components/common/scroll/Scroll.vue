@@ -145,7 +145,7 @@ export default {
       },
       refresh() {
         // 代理better-scroll的refresh方法
-        console.log('bscroll已刷新');
+        // console.log('bscroll已刷新');
         this.scroll && this.scroll.refresh()
       },
       scrollTo() {
@@ -155,6 +155,10 @@ export default {
       scrollToElement() {
         // 代理better-scroll的scrollToElement方法
         this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
+      },
+      stop() {
+        // 代理stop方法
+        this.scroll && this.scroll.stop.apply(this.scroll, arguments)
       }
     },
     watch: {

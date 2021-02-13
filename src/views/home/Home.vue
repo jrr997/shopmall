@@ -1,6 +1,6 @@
 <template>
 <div id="home">
-<nav-bar class="home-nav"><template #center>购物街</template></nav-bar>
+<nav-bar class="home-nav"><template #center>一条街</template></nav-bar>
 <tab-control class="tab-control" :title="['流行', '新款', '精选']"  v-show="isTabFixed"
                 ref="tabControl1"
                 @tabClick="tabClick" />
@@ -11,7 +11,6 @@
         :useTransition="false"
         :pullup="true"
         :data="scrollData"
-        :pulldown="pulldown"
         @scroll="scrollPos"
         @scrollToEnd ="scrollToEnd" >
     <home-swiper :banners="banners" @swiperImgLoad="swiperImgLoad" />
@@ -94,7 +93,7 @@ export default {
   // 滚动位置监听，获取滚动position
   scrollPos(pos) {
     // 判断是否显示子组件BackTop
-  this.backTopShow(pos)
+    this.backTopShow(pos)
   // console.log(pos.y);
     // TabControl的吸顶效果
     this.isTabFixed = (- pos.y) > this.offsetTop
@@ -109,7 +108,7 @@ export default {
   swiperImgLoad() {
       //  获取tab-control的offsetTop
     this.offsetTop = this.$refs.tabControl.$el.offsetTop
-    console.log(this.$refs.tabControl.$el.offsetTop);
+    // console.log(this.$refs.tabControl.$el.offsetTop);
   },
 
 
@@ -174,11 +173,6 @@ export default {
   .home-nav {
     background-color: var(--color-tint);
     color:#fff;
-    /* position:fixed; */
-    /* z-index:999;
-    left:0;
-    right:0;
-    top:0; */
   }
   .tab-control {
     position:relative;

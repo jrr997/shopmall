@@ -82,7 +82,7 @@ export default {
       this.jumpY.push(this.$refs.comments.$el.offsetTop - 60)
       this.jumpY.push(this.$refs.recommends.$el.offsetTop - 60)
       this.jumpY.push(Number.MAX_VALUE)
-      console.log(this.jumpY)
+      // console.log(this.jumpY)
     },
     titleClick(index) {
       console.log(index);
@@ -105,7 +105,6 @@ export default {
       }
     },
     addToCart() {
-      console.log('购物车');
       // 获取需要在购物车展示的信息
       const product = {}
       product.iid = this.iid
@@ -118,9 +117,9 @@ export default {
       // this.$store.commit('addCart',product)
       // 把信息传入action中，对数据进行处理
       this.addCart(product).then(res => {
-        console.log(res);
+        // console.log(res);
         // 弹出Toast
-        this.$toast.show(res,2000)
+        this.$toast.show(res,1000);
       })
 
       // this.$store.dispatch('addCart',product).then(res => {
@@ -130,7 +129,7 @@ export default {
     },
     getViewHeight() {
       this.detailHeight = window.innerHeight + 'px'
-      console.log('detailHeight: ' + this.viewHeight);
+      // console.log('detailHeight: ' + this.viewHeight);
     }
   },
   created() {
