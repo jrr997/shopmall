@@ -1,5 +1,9 @@
 
 
+
+
+# 演示地址：http://124.70.150.189/
+
 #  小型的购物商场项目，感兴趣的小伙伴可以了解一下，如果觉得项目开发的不错可以给个star，小生在这里先谢谢大家啦，下面是该商城的说明书：
 
 
@@ -14,15 +18,15 @@ npm run serve
 
 ## 2.项目界面展示
 
-![](https://github.com/jrr997/shopmall/blob/master/readmePic/home.png)
+![](https://raw.githubusercontent.com/jrr997/shopmall/master/readmePic/home.png)
 
-![](https://github.com/jrr997/shopmall/blob/master/readmePic/detail.png)
+![](https://raw.githubusercontent.com/jrr997/shopmall/master/readmePic/category.png)
 
-![](https://github.com/jrr997/shopmall/blob/master/readmePic/category.png)
+![](https://raw.githubusercontent.com/jrr997/shopmall/master/readmePic/cart.png)
 
-![](https://github.com/jrr997/shopmall/blob/master/readmePic/cart.png)
+![](https://raw.githubusercontent.com/jrr997/shopmall/master/readmePic/profile.png)
 
-![](https://github.com/jrr997/shopmall/blob/master/readmePic/profile.png)
+![](https://raw.githubusercontent.com/jrr997/shopmall/master/readmePic/detail.png)
 
 
 
